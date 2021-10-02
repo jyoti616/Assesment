@@ -1,0 +1,199 @@
+Ans Number: 7
+import pandas as pd
+import numpy as np
+data = pd.read_csv('/content/drive/MyDrive/a/order_details.csv')
+print(data['city'].value_counts())
+print("Total number of Unique Cities:", len(data['city'].value_counts()))
+print(data['vendor_id'].value_counts())
+print("Total number of Unique Vendors:", len(data['vendor_id'].value_counts()))
+#coordinates = data.loc[data['vendor_id'] == data['Guwahati']]
+#print(coordinates)
+print(data['quantity'].value_counts())
+
+Ans Number: 2
+class Node:
+	
+	# Function to initialize the node object
+	def __init__(self, data):
+
+		self.data = data
+		self.next = None
+	
+# Linked List Class
+class LinkedList:
+
+	# Function to initialize the
+	# LinkedList class.
+	def __init__(self):
+
+		# Initialize head as None
+		self.head = None
+
+	# This function insert a new node at the
+	# beginning of the linked list
+	def push(self, new_data):
+	
+		# Create a new Node
+		new_node = Node(new_data)
+
+		# Make next of new Node as head
+		new_node.next = self.head
+
+		# Move the head to point to new Node
+		self.head = new_node
+		
+	# Method to print the linked list
+	def printList(self):
+
+		# Object to iterate
+		# the list
+		ptr = self.head
+
+		# Loop to iterate list
+		while(ptr != None):
+			print(ptr.data, '->', end = '')
+
+			# Moving the iterating object
+			# to next node
+			ptr = ptr.next
+			
+		print()
+
+# Function to reverse the linked
+# list and return its length
+def reverse(head_ref):
+
+	# Initialising prev and current
+	# at None and starting node
+	# respectively.
+	prev = None
+	current = head_ref.head
+
+	Len = 0
+
+	# Loop to reverse the link
+	# of each node in the list
+	while(current != None):
+		Len += 1
+		Next = current.next
+		current.next = prev
+		prev = current
+		current = Next
+
+	# Assigning new starting object
+	# to main head object.
+	head_ref.head = prev
+
+	# Returning the length of
+	# linked list.
+	return Len
+
+
+def make_empty_list(size):
+	
+	head = LinkedList()
+	
+	while(size):
+		head.push(0)
+		size -= 1
+
+	return head
+
+
+def multiplyTwoLists(first, second):
+
+
+	m = reverse(first)
+	n = reverse(second)
+
+
+	# m+n+1 can be max size of the list.
+	result = make_empty_list(m + n + 1)
+
+
+	second_ptr = second.head
+	result_ptr1 = result.head
+
+
+	while(second_ptr != None):
+		carry = 0
+
+
+		# time.
+		result_ptr2 = result_ptr1
+		first_ptr = first.head
+
+		while(first_ptr != None):
+			
+
+			mul = ((first_ptr.data) *
+				(second_ptr.data) + carry)
+
+
+			result_ptr2.data += mul % 10
+
+
+			carry = ((mul // 10) +
+					(result_ptr2.data // 10))
+			result_ptr2.data = result_ptr2.data % 10
+
+			first_ptr = first_ptr.next
+			result_ptr2 = result_ptr2.next
+
+		if(carry > 0):
+			result_ptr2.data += carry
+
+		result_ptr1 = result_ptr1.next
+		second_ptr = second_ptr.next
+
+
+	reverse(result)
+	reverse(first)
+	reverse(second)
+
+	start = result.head
+	while(start.data == 0):
+		result.head = start.next
+		start = start.next
+
+	return result
+
+if __name__=='__main__':
+
+	first = LinkedList()
+	second = LinkedList()
+	first.push(9)
+	first.push(6)
+	first.push(4)
+	first.push(9)
+	first.push(9)
+	first.push(9)
+ 
+	print("First list is: ", end = '')
+	first.printList()
+	second.push(9)
+	second.push(4)
+	second.push(8)
+	second.push(9)
+	second.push(9)
+
+	# Printing second linked list.
+	print("Second List is: ", end = '')
+	second.printList()
+	result = multiplyTwoLists(first, second)
+	print("Resultant list is: ", end = '')
+	result.printList()
+
+Ans Number: 5
+data = """
+INDIA 
+Runs: 231, Wickets: 5, Overs: 50 
+ENGLAND 
+Runs: 187, Wickets: 10, Overs: 47 
+BANGLADESH 
+Runs: 220, Wickets: 8, Overs: 50 
+AUSTRALIA 
+Runs: 250, Wickets: 9, Overs: 50 """ 
+dict = {"country_name":{"runs":data,"wickets":data,"overs":data}} 
+for key, value in dict.items():
+  print(key, '->', value)
